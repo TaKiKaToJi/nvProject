@@ -1,58 +1,29 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, TextInput } from "react-native";
+import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import React from "react";
-
-function HomeScreen({ navigation, route }) {
-  React.useEffect(() => {
-    if (route.params?.post) {
-      // TEST
-    }
-  }, [route.params?.post]);
-  return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button title="Create Post" onPress={()=>navigation.navigate("CreatePost")} />
-      <Text style={{ margin: 10 }}>Post:{route.params?.post}</Text>
-    </View>
-  );
-}
-
-function CreatePostScreen({ navigation, route }) {
-  const [postTest, setPostText] = React.useState("");
-
-  return (
-    <>
-      <TextInput
-        multiline
-        placeholder={{ height: 200, padding: 100, BackgroundColor: "white", alignItems: "center", justifyContent: "center"}}
-        onChangeText={(postTest)=> setPostText(postTest)}
-        value={postTest}
-      />
-
-      <Button title="Click" onPress={()=>{
-        navigation.navigate('Home',{post:postTest})
-      }}/>
-    </>
-  );
-}
+import FirstPage from "./Pages/FirstPage";
+import SecondPage from "./Pages/SecondPage";
+import ThirdPage from "./Pages/ThirdPage";
 
 const Stack = createNativeStackNavigator();
 
-export default function App() {
+function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName="Home"
+        initialRouteName="First Page"
         screenOptions={{
-          headerStyle: { BackgroundColor: "#b015e8" },
-          headerTintColor: "#15b3e8",
-          headerTitleStyle: { fontWeight: "bold", fontSize: 30 },
+          headerStyle: { backgroundColor: "#FB76C1" },
+          headerTintColor: "#fff",
+          headerTitleStyle: { fontWeight: "bold", fontSize: 24 },
         }}
       >
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="CreatePost" component={CreatePostScreen} />
+        <Stack.Screen name="First Page" component={FirstPage} />
+        <Stack.Screen name="Second Page" component={SecondPage} />
+        <Stack.Screen name="Third Page" component={ThirdPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+export default App;
