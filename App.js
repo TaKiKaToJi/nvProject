@@ -1,5 +1,12 @@
 import * as React from "react";
-import { View, Text, Button,SafeAreaView,Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  Button,
+  SafeAreaView,
+  Image,
+  StyleSheet,
+} from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HomeScreen2 from "./Screens/HomeScreen2";
 import {
@@ -29,23 +36,24 @@ function Notifications() {
 
 function CustomDrawerContent(props) {
   return (
-    <DrawerContentScrollView {...props}>
-      <SafeAreaView>
+    <SafeAreaView>
+      <DrawerContentScrollView {...props}>
         <Image
           source={require("./assets/react_logo.png")}
           style={styles.sideMenuProfileIcon}
         />
-      </SafeAreaView>
-      <DrawerItemList {...props} />
-      <DrawerItem
-        label="Close drawer"
-        onPress={() => props.navigation.closeDrawer()}
-      />
-      {/* <DrawerItem
+
+        <DrawerItemList {...props} />
+        <DrawerItem
+          label="Close drawer"
+          onPress={() => props.navigation.closeDrawer()}
+        />
+        {/* <DrawerItem
         label="Toggle drawer"
         onPress={() => props.navigation.toggleDrawer()}
       /> */}
-    </DrawerContentScrollView>
+      </DrawerContentScrollView>
+    </SafeAreaView>
   );
 }
 
