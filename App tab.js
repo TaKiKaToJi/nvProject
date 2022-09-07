@@ -3,21 +3,24 @@ import { Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-function HomeScreen() {
+function HomeScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Home!</Text>
+      <Button title='GO SETTINGS' onPress={()=> navigation.navigate('Settings')}/>
     </View>
   );
 }
 
-function SettingsScreen() {
+function SettingsScreen({ navigation }) {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Settings!</Text>
+      <Button title='GO HOME' onPress={()=> navigation.goBack()}/>
     </View>
   );
 }
+
 
 const Tab = createBottomTabNavigator();
 
