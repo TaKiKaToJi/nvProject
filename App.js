@@ -1,15 +1,12 @@
 import * as React from "react";
-import { Text, View, Button, } from "react-native";
+import { Text, View, Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import {
-  createDrawerNavigator,
-} from "@react-navigation/drawer";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
-
 
 function HomeScreen({ navigation }) {
   return (
@@ -32,8 +29,6 @@ function SettingsScreen({ navigation }) {
   );
 }
 
-
-
 function MyTabs() {
   return (
     <Tab.Navigator
@@ -53,8 +48,8 @@ function MyTabs() {
         tabBarActiveTintColor: "red",
         tabBarInactiveTintColor: "black",
         headerRight: () => (
-          <Ionicons name="person-add" color={'black'} size={30}/>
-        )
+          <Ionicons name="person-add" color={"black"} size={30} />
+        ),
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -82,8 +77,8 @@ function MyTabs1() {
         tabBarActiveTintColor: "red",
         tabBarInactiveTintColor: "black",
         headerRight: () => (
-          <Ionicons name="person-add" color={'black'} size={30}/>
-        ) 
+          <Ionicons name="person-add" color={"black"} size={30} />
+        ),
       })}
     >
       <Tab.Screen name="Settings" component={SettingsScreen} />
@@ -91,8 +86,6 @@ function MyTabs1() {
     </Tab.Navigator>
   );
 }
-
-
 
 function MyDrawer() {
   return (
