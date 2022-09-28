@@ -43,7 +43,6 @@ const ProductScreen = () => {
         renderItem={_renderItem}
       />
     </View>
-    
   );
 };
 
@@ -53,8 +52,8 @@ const ItemSeparatorView = () => {
     <View
       style={{
         height: 0.5,
-        width: '100%',
-        backgroundColor: '#C8C8C8',
+        width: "100%",
+        backgroundColor: "#C8C8C8",
       }}
     />
   );
@@ -93,4 +92,3 @@ const styles = StyleSheet.create({
     fontWeight: "700",
   },
 });
-
