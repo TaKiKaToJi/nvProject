@@ -5,57 +5,114 @@ import {
   ActivityIndicator,
   FlatList,
   Image,
-} from "react-native";
+  SafeAreaView,
+  TouchableOpacity,
+} from "react-native"; //
+import React, { useState, useEffect, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import axios from "axios";
-import React, { useState, useEffect } from "react";
-const _renderItem = ({ item }) => {
-  return (
-    <View style={styles.container}>
-      <View>
-        <Image source={{ uri: item.picture }} style={styles.thumbnail} />
-      </View>
-      <View style={styles.dataContent}>
-        <Text>{item.title}</Text>
-        <Text>{item.detail}</Text>
-      </View>
-    </View>
+
+const ProductScreen = ({navigation}) => {
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      getData();
+    }, [])
   );
-};
-const ProductScreen = () => {
-  const [Product, setProduct] = useState([]);
+  // useEffect(()=>{
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await axios.get("https://api.codingthailand.com/api/course");
-      console.log(res.data.data);
-      // alert(JSON.stringify(res.data.data))
-      setProduct(res.data.data);
-    };
+  //     getData();
+  // },[])
+
+  if (error) {
+    //ถ้าerror จะreturn UI กลับไป
+    return (
+      <View style={styles.container}>
+        <Text>{error.message}</Text>
+      </View>
+    );
+  }
+
+  if (loading === true) {
+    return (
+      <View>
+        <ActivityIndicator color="green" size="large" />
+      </View>
+    );
+  }
+
+  const _onRefresh = () => {
     getData();
-  }, []);
+  };
 
+  const getData = async () => {
+    try {
+      setLoading(true);
+      const res = await axios.get("https://api.codingthailand.com/api/course");
+      //console.log(res.data.data)
+      setProduct(res.data.data);
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      setError(error); //set error to state of error ว่าเกิดอะไรขึ้น
+    }
+  };
+
+  const ItemSeparatorView = () => {
+    return (
+      // Flat List Item Separator
+      <View
+        style={{
+          height: 0.5,
+          width: "100%",
+          backgroundColor: "gray",
+        }}
+      />
+    );
+  };
+
+  const _renderItem = ({ item }) => {
+    let picture =
+      item.picture !== null ? item.picture : "https://via.placeholder.com/150";
+    return (
+      <SafeAreaView>
+        <TouchableOpacity
+          style={styles.addButtonStyle}
+          onPress={() => {
+            navigation.navigate('Detail', { id:item.id, title:item.title });
+          }}
+        >
+          <View style={styles.dataContainer}>
+            <View style={styles.container}>
+              <Image
+                resizeMode="cover"
+                source={{ uri: picture }}
+                style={styles.thumbnail}
+              />
+              <View style={styles.dataContent}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.detail}>{item.detail}</Text>
+              </View>
+            </View>
+          </View>
+        </TouchableOpacity>
+      </SafeAreaView>
+    );
+  };
   return (
     <View>
       <FlatList
-        data={Product}
-        keyExtractor={(item, index) => item.id.toString()}
+        data={product}
+        keyExtrator={(item, index) => item.id.toString()}
         ItemSeparatorComponent={ItemSeparatorView}
         renderItem={_renderItem}
+        refreshing={loading}
+        _onRefresh={_onRefresh}
       />
     </View>
-  );
-};
-
-const ItemSeparatorView = () => {
-  return (
-    // Flat List Item Separator
-    <View
-      style={{
-        height: 0.5,
-        width: "100%",
-        backgroundColor: "#C8C8C8",
-      }}
-    />
   );
 };
 
@@ -90,5 +147,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#888",
     fontWeight: "700",
+  },
+  addButtonStyle: {
+    width: "100%",
+    marginBottom: 15,
   },
 });

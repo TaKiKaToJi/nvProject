@@ -1,21 +1,16 @@
 import * as React from "react";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  Image,
-  StyleSheet,
-} from "react-native";
+import { View, Text, SafeAreaView, Image, StyleSheet } from "react-native";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import HomeScreen2 from "./Screens/HomeScreen2";
 import ProductScreen from "./Screens/ProductScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import DetailScreen from "./Screens/DetailScreen";
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-
 
 function Notifications() {
   return (
@@ -40,6 +35,26 @@ function CustomDrawerContent(props) {
   );
 }
 
+const Stack = createNativeStackNavigator();
+function ProductStack() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: "#ffff",
+        },
+        headerTintColor: "#445885",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
+      <Stack.Screen name="Product" component={ProductScreen} />
+      <Stack.Screen name="Detail" component={DetailScreen} />
+    </Stack.Navigator>
+  );
+}
+
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
@@ -49,7 +64,7 @@ function MyDrawer() {
       drawerContent={(props) => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name="Home" component={HomeScreen2} />
-      <Drawer.Screen name="Product" component={ProductScreen} />
+      <Drawer.Screen name="Product" component={ProductStack} />
     </Drawer.Navigator>
   );
 }
